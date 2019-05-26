@@ -14,16 +14,18 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->text('summary', 300)->nullable();
-            $table->text('context');
+            $table->text('context')->nullable();
             $table->uuid('company_id')->index();
             $table->string('image')->nullable();
             $table->dateTime('due_date');
             $table->string('url')->nullable();
             $table->string('slug');
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

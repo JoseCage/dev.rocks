@@ -4,8 +4,12 @@ namespace DevRocks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use DevRocks\Traits\UuidTrait as Uuids;
+
 class Job extends Model
 {
+    use Uuids;
+
     /**
     * Indicates if the IDs are auto-incrementing.
     *
@@ -19,9 +23,8 @@ class Job extends Model
     * @var array
     */
    protected $fillable = [
-       'id','name', 'email', 'email_verified_at',
-       'phone', 'logo','facebook_handle', 'website',
-       'twitter_handle', 'github_handle', 'slug', 'password'
+       'id', 'title', 'summary', 'context',
+       'company_id', 'image', 'due_date', 'url', 'slug'
    ];
 
    /**
@@ -30,7 +33,6 @@ class Job extends Model
     * @var array
     */
    protected $hidden = [
-       'password', 'deleted_at', 'remember_token',
    ];
 
    /**
@@ -40,5 +42,14 @@ class Job extends Model
     */
    protected $casts = [
        'email_verified_at' => 'datetime',
+       'due_date' => 'datetime',
    ];
+
+   /**
+   * Company relationship
+   */
+   public function company()
+   {
+       return $this->belongsTo(Company::class);
+   }
 }

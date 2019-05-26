@@ -14,7 +14,7 @@ class CreateBadgesTable extends Migration
     public function up()
     {
         Schema::create('badges', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->primary();
             $table->timestamps();
         });
     }
