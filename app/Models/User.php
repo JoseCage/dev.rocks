@@ -6,9 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use DevRocks\Traits\UuidTrait as Uuids;
+
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Uuids;
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -23,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'email', 'password',
+        'name', 'phone', 'photo', 'email', 'password',
     ];
 
     /**

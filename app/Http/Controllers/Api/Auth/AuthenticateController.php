@@ -39,14 +39,18 @@ class AuthenticateController extends Controller
         ]);
 
         if ($request->input('photo')) {
-            // Create a name for the file
+
             $file = $request->input('photo');
 
             $extension = \File::extension($file);
 
+            // Create a name for the file
             $filename = str_slug($user->name) . '_' . time(). $extension;
 
-            
+            Storage::putFileAs('avatars', $file, $filename);
+
+            $user->save();
+            $user->photo = $filename;
         }
 
     }

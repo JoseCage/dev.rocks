@@ -2,10 +2,12 @@
 
 namespace DevRocks\Http\Controllers\Auth;
 
-use DevRocks\User;
+use DevRocks\Models\User;
 use DevRocks\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -28,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -50,6 +52,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'min:9', 'max:15'],
+            //'photo' => ['required', 'string', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -59,14 +63,48 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \DevRocks\User
+     * @return \DevRocks\Models\User
      */
     protected function create(array $data)
     {
+        $request = request();
+
+        //if ($request->file('photo')) {
+
+            // $file = $request->file('photo');
+            //
+            // //$user = User::where($data->email);
+            //
+            // //$extension = \File::extension($file);
+            //
+            // // Create a name for the file
+            // $filename = 'avatar' . '_' . time() . '.png';
+            //
+            // Storage::put($file);
+
+            //$user->photo = $filename;
+            //$user->save();
+            //dd($filename);
+        //}
+        //$file = $request->file('photo')->store('avatars');
+        //$file = Storage::putFile('avatars', $request->file('photo'));
+        $fileName = 'null';
+    if (input::file('photo')->isValid()) {
+        $destinationPath = public_path('avatars');
+        $extension = Input::file('photo')->getClientOriginalExtension();
+        $fileName =  'profile_' . uniqid().'.'.$extension;
+
+        Input::file('photo')->move($destinationPath, $fileName);
+    }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'photo' => $fileName,
             'password' => Hash::make($data['password']),
         ]);
+
+        // Send the confirmation email after registration
     }
 }

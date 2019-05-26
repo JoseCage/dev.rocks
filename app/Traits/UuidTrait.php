@@ -1,6 +1,6 @@
 <?php
 
-namespace LinkaCRM\Traits;
+namespace DevRocks\Traits;
 
 use Ramsey\Uuid\Uuid;
 

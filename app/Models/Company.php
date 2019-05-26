@@ -2,11 +2,15 @@
 
 namespace DevRocks\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Company extends Model
+use DevRocks\Traits\UuidTrait as Uuids;
+
+class Company extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Uuids;
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -43,4 +47,9 @@ class Company extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
 }
