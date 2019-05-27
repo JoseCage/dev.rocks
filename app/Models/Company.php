@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use DevRocks\Traits\UuidTrait as Uuids;
 
-class Company extends Authenticatable
+class Company extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, Uuids;
 

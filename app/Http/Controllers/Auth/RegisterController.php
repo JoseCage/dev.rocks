@@ -89,7 +89,7 @@ class RegisterController extends Controller
         //$file = $request->file('photo')->store('avatars');
         //$file = Storage::putFile('avatars', $request->file('photo'));
         $fileName = 'null';
-    if (input::file('photo')->isValid()) {
+    if (input::file('photo')) {
         $destinationPath = public_path('avatars');
         $extension = Input::file('photo')->getClientOriginalExtension();
         $fileName =  'profile_' . uniqid().'.'.$extension;

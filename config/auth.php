@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'company' => [
+            'driver' => 'session',
+            'provider' => 'companies',
+        ],
 
         'api' => [
             'driver' => 'token',
@@ -70,6 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => DevRocks\Models\User::class,
         ],
+        'companies' => [
+            'driver' => 'eloquent',
+            'model' => DevRocks\Models\Company::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -96,6 +104,11 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'companies' => [
+            'provider' => 'companies',
+            'table' => 'companies_password_resets',
             'expire' => 60,
         ],
     ],
