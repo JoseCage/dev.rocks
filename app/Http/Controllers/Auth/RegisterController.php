@@ -90,9 +90,9 @@ class RegisterController extends Controller
         // Send the confirmation email after registration
     }
 
-    public function showCompanyRegisterForm()
+    public function showCompanyRegistrationForm()
     {
-        return view('auth.register', ['url' => 'companies']);
+        return view('auth.register', compact('url', 'companies'));
     }
 
     public function createCompany(Request $request)

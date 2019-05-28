@@ -16,16 +16,21 @@ Route::get('/', function () {
 });
 
 // Candidate auth
-Route::group(['prefix' => 'users'], function(){
-    Auth::routes(['verify' => true]);
-});
+//Route::group(['prefix' => 'users'], function(){
+Auth::routes(['verify' => true]);
+Route::get('/login/companies', 'Auth\LoginController@showCompanyLoginForm');
+Route::post('login/companies', 'Auth\LoginController@loginCompany')->name('companies.login');
+Route::get('/register/companies', 'Auth\RegisterController@showCompanyRegistrationForm');
+Route::post('register/companies', 'Auth\RegisterController@registerCompany')->name('companies.register');
+//});
 // Candidate routes
 Route::group(['prefix' => 'me'], function($dashboard){
     $dashboard->get('/', 'HomeController@index')->name('home');
 });
 
 // Authentication for companies
-Route::group(['prefix' => 'companies', 'namespace' => 'Auth\Company'], function ($auth) {
+/**
+ Route::group(['prefix' => 'companies', 'namespace' => 'Auth'], function ($auth) {
     $auth->get('/login', 'LoginController@showCompanyLoginForm');
     $auth->post('login', 'LoginController@loginCompany')->name('companies.login');
     $auth->get('/register', 'RegisterController@showCompanyRegistrationForm');
@@ -37,7 +42,7 @@ Route::group(['prefix' => 'companies', 'namespace' => 'Auth\Company'], function 
     // $auth->get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('companies.password.request');
     // $auth->post('password/reset', 'ForgotPasswordController@reset')->name('companies.password.update');
     // $auth->get('password/reset/{token}', 'ForgotPasswordController@showResetForm')->name('companies.password.reset');
-});
+});*/
 // Companies routes
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:company', 'namespace' => 'Company'], function ($admin) {
     $admin->get('/', 'AdminController@home')->name('companies.admin');

@@ -40,10 +40,10 @@ class LoginController extends Controller
 
     public function showCompanyLoginForm()
     {
-        return view('auth.login', ['url' => 'companies']);
+        return view('auth.login', compact('url', 'companies'));
     }
 
-    public function comanyLogin(Request $request)
+    public function companyLogin(Request $request)
     {
         $this->validate([$request, [
             'email' => 'required|email',
