@@ -24,6 +24,7 @@ class CreateJobsTable extends Migration
             $table->string('url')->nullable();
             $table->string('slug');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });

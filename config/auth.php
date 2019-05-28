@@ -40,7 +40,8 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'company' => [
+
+        'companies' => [
             'driver' => 'session',
             'provider' => 'companies',
         ],
@@ -74,11 +75,11 @@ return [
             'driver' => 'eloquent',
             'model' => DevRocks\Models\User::class,
         ],
+
         'companies' => [
             'driver' => 'eloquent',
             'model' => DevRocks\Models\Company::class,
         ],
-
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -106,9 +107,10 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+
         'companies' => [
-            'provider' => 'companies',
-            'table' => 'companies_password_resets',
+            'provider' => 'users',
+            'table' => 'password_resets',
             'expire' => 60,
         ],
     ],

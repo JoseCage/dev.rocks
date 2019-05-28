@@ -15,7 +15,12 @@ class CreateBadgesTable extends Migration
     {
         Schema::create('badges', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('name');
+            $table->text('description');
+            $table->string('icon')->nullable();
+            $table->text('svg_code')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

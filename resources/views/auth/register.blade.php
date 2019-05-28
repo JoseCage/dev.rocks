@@ -1,14 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ isset($url) ? ucwords($url) : "" }} {{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data" action="{{ route('register') }}">
+                 @isset($url)
+                    <form method="POST" action="{{ route('register/$url') }}">
+                @else
+                    <form method="POST" action="{{ route('register') }}">
+                 @endisset
                         @csrf
 
                         <div class="form-group row">

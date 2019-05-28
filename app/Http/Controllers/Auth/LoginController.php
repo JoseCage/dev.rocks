@@ -35,5 +35,24 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->middleware('guest:companies')->except('logout');
+    }
+
+    public function showCompanyLoginForm()
+    {
+        return view('auth.login', ['url' => 'companies']);
+    }
+
+    public function comanyLogin(Request $request)
+    {
+        $this->validate([$request, [
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]]);
+
+        if (Auth::guard('companies')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+            return redirect()->intended('/dashboard');
+        }
+        return back()->withInput($request->only('email', 'password'));
     }
 }

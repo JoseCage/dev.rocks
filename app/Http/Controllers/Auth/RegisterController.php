@@ -40,6 +40,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:companies');
     }
 
     /**
@@ -69,25 +70,6 @@ class RegisterController extends Controller
     {
         $request = request();
 
-        //if ($request->file('photo')) {
-
-            // $file = $request->file('photo');
-            //
-            // //$user = User::where($data->email);
-            //
-            // //$extension = \File::extension($file);
-            //
-            // // Create a name for the file
-            // $filename = 'avatar' . '_' . time() . '.png';
-            //
-            // Storage::put($file);
-
-            //$user->photo = $filename;
-            //$user->save();
-            //dd($filename);
-        //}
-        //$file = $request->file('photo')->store('avatars');
-        //$file = Storage::putFile('avatars', $request->file('photo'));
         $fileName = 'null';
     if (input::file('photo')) {
         $destinationPath = public_path('avatars');
@@ -106,5 +88,24 @@ class RegisterController extends Controller
         ]);
 
         // Send the confirmation email after registration
+    }
+
+    public function showCompanyRegisterForm()
+    {
+        return view('auth.register', ['url' => 'companies']);
+    }
+
+    public function createCompany(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+
+        $company = Company::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        return redirect()->intended('login/companies');
     }
 }
