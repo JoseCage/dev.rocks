@@ -9,18 +9,18 @@ use Faker\Generator as Faker;
 
 $factory->define(Job::class, function (Faker $faker) {
 
-    $title = $faker->word(40);
+    $title = $faker->sentence($nbWords = 6, $variableNbWords = true);
 
     return [
-      'title' => $faker->word(40),
-      'summary' => $faker->text,
-      'context' => $faker->text,
+      'title' => $title,
+      'summary' => $faker->paragraphs,
+      'context' => $faker->paragraphs,
       'is_open' => true,
       'is_featured' => false,
       'company_id' => function(){
           return factory(Company::class)->create()->id;
       },
-      'image' => $faker->image,
+      'image' => $faker->imageUrl($width = 800, $height = 800),
       'due_date' => now()->addDays(30),
       'url' => $faker->url,
       'slug' => str_slug($title),
