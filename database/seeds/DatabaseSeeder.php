@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->command->info('Creating some Fake data');
         $this->call(CategoriesTableSeeder::class);
-        $this->call(JobsTableSeeder::class);
         $this->call(JobTypesTableSeeder::class);
+        $this->call(JobsTableSeeder::class);
     }
 }

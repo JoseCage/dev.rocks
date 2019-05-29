@@ -23,7 +23,7 @@ class Job extends Model
     * @var array
     */
    protected $fillable = [
-       'id', 'title', 'summary', 'context', 'location', 'is_open', 'is_featured',
+       'id', 'title', 'summary', 'context', 'location', 'is_open', 'is_featured', 'job_type_id',
        'company_id', 'image', 'due_date', 'url', 'slug'
    ];
 
@@ -44,6 +44,11 @@ class Job extends Model
        'email_verified_at' => 'datetime',
        'due_date' => 'datetime',
    ];
+
+   public function type()
+   {
+     return $this->hasOne(JobType::class, 'id', 'job_type_id');
+   }
 
    /**
    * Company relationship

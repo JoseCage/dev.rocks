@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function landingpage()
     {
       $countOpenJobs = Job::where('is_open', true)->count();
-      $openJobs = Job::where('is_open', true)->paginate(6);
+      $openJobs = Job::where('is_open', true)->orderBy('created_at', 'desc')->paginate(6);
 
       return view('landingpage', compact('countOpenJobs', 'openJobs'));
     }

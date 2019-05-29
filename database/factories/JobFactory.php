@@ -13,13 +13,13 @@ $factory->define(Job::class, function (Faker $faker) {
     $title = $faker->sentence($nbWords = 6, $variableNbWords = true);
 
     return [
-      'title' => $title,
+      'title' => ucfirst($title),
       'summary' => $faker->text(150),
       'context' => $faker->text(200),
       'location' => $faker->city,
       'is_open' => true,
       'is_featured' => false,
-      'job_type' => function(){
+      'job_type_id' => function(){
           return factory(JobType::class)->create()->id;
       },
       'company_id' => function(){
