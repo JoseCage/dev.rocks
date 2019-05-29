@@ -2,18 +2,13 @@
 
 namespace DevRocks\Models;
 
-// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use DevRocks\Traits\UuidTrait as UUids;
 
-use DevRocks\Traits\UuidTrait as Uuids;
-
-class Company extends Authenticatable
+class Profile extends Model
 {
-    use Uuids, Notifiable;
-
-    protected $guard = 'companies';
+    use Uuids;
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -28,9 +23,8 @@ class Company extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','name', 'email', 'email_verified_at',
-        'phone', 'logo','facebook_handle', 'website',
-        'twitter_handle', 'github_handle', 'slug', 'password'
+        'id', 'name', 'photo','facebook_handle', 'website',
+        'twitter_handle', 'github_handle', 'slug', 'user_id'
     ];
 
     /**
@@ -39,7 +33,7 @@ class Company extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'deleted_at', 'remember_token',
+        'deleted_at',
     ];
 
     /**
@@ -48,11 +42,18 @@ class Company extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     public function jobs()
     {
         return $this->hasMany(Job::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

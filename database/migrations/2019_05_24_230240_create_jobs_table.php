@@ -22,8 +22,9 @@ class CreateJobsTable extends Migration
             $table->string('image')->nullable();
             $table->dateTime('due_date');
             $table->string('url')->nullable();
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });

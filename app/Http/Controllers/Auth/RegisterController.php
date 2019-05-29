@@ -2,13 +2,17 @@
 
 namespace DevRocks\Http\Controllers\Auth;
 
-use DevRocks\Models\User;
 use DevRocks\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
+use DevRocks\Models\User;
+use DevRocks\Http\Requests\CreateCompanyRequest;
+use DevRocks\Models\Company;
 
 class RegisterController extends Controller
 {
@@ -30,7 +34,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/me';
 
     /**
      * Create a new controller instance.
@@ -40,6 +44,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:companies');
     }
 
     /**
@@ -52,10 +57,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'min:9', 'max:15'],
+            //'phone' => ['required', 'string', 'min:9', 'max:15'],
             //'photo' => ['required', 'string', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'pwned'],
         ]);
     }
 
@@ -69,27 +74,8 @@ class RegisterController extends Controller
     {
         $request = request();
 
-        //if ($request->file('photo')) {
-
-            // $file = $request->file('photo');
-            //
-            // //$user = User::where($data->email);
-            //
-            // //$extension = \File::extension($file);
-            //
-            // // Create a name for the file
-            // $filename = 'avatar' . '_' . time() . '.png';
-            //
-            // Storage::put($file);
-
-            //$user->photo = $filename;
-            //$user->save();
-            //dd($filename);
-        //}
-        //$file = $request->file('photo')->store('avatars');
-        //$file = Storage::putFile('avatars', $request->file('photo'));
         $fileName = 'null';
-    if (input::file('photo')->isValid()) {
+    if (input::file('photo')) {
         $destinationPath = public_path('avatars');
         $extension = Input::file('photo')->getClientOriginalExtension();
         $fileName =  'profile_' . uniqid().'.'.$extension;
@@ -100,11 +86,49 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            //'phone' => $data['phone'],
             'photo' => $fileName,
             'password' => Hash::make($data['password']),
         ]);
 
         // Send the confirmation email after registration
+    }
+
+    public function showCompanyRegistrationForm()
+    {
+        return view('auth.company.register');
+    }
+
+    public function createCompany(CreateCompanyRequest $request)
+    {
+        //$this->validator($request->all())->validate();
+
+        $fileName = 'null';
+        if (input::file('logo')) {
+            $destinationPath = public_path('logos');
+            $extension = Input::file('logo')->getClientOriginalExtension();
+            $fileName =  'logo_' . uniqid().'.'.$extension;
+
+            Input::file('logo')->move($destinationPath, $fileName);
+        }
+
+        $company = Company::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'logo' => $request['logo'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        $credentials = $request->only(['email', 'password']);
+
+        Auth::guard('companies')->attempt($credentials);
+
+        return redirect()->route('companies.admin');
+
+        // if (auth()->guard('companies')->attempt(['email' => $company->email, 'password' => $company->password ])) {
+        //     return redirect()->route('companies.admin');
+        // }
+
+        // return redirect()->intended('login/companies');
     }
 }

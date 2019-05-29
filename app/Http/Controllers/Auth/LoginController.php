@@ -4,6 +4,9 @@ namespace DevRocks\Http\Controllers\Auth;
 
 use DevRocks\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+
+use DevRocks\Http\Requests\LoginCompanyRequest;
 
 class LoginController extends Controller
 {
@@ -25,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/me';
 
     /**
      * Create a new controller instance.
@@ -35,5 +38,20 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->middleware('guest:companies')->except('logout');
+    }
+
+    public function showCompanyLoginForm()
+    {
+        return view('auth.company.login');
+    }
+
+    public function companyLogin(LoginCompanyRequest $request)
+    {
+
+        if (Auth::guard('companies')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+            return redirect()->intended('/dashboard');
+        }
+        return back()->withInput($request->only('email', 'password'));
     }
 }

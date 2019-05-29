@@ -1,9 +1,9 @@
 {
-    "name": "laravel/laravel",
+    "name": "linkasoftwares/devrocks",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Job board for developers and geeks.",
     "keywords": [
-        "framework",
+        "jobboard",
         "laravel"
     ],
     "license": "MIT",
@@ -17,6 +17,7 @@
         "valorin/pwned-validator": "^1.2"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2",
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
