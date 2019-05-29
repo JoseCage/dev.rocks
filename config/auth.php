@@ -109,7 +109,7 @@ return [
         ],
 
         'companies' => [
-            'provider' => 'users',
+            'provider' => 'companies',
             'table' => 'password_resets',
             'expire' => 60,
         ],

@@ -2,10 +2,11 @@
 
 namespace DevRocks\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-
 use DevRocks\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+
+use DevRocks\Http\Requests\LoginCompanyRequest;
 
 class LoginController extends Controller
 {
@@ -27,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/me';
 
     /**
      * Create a new controller instance.
@@ -45,12 +46,8 @@ class LoginController extends Controller
         return view('auth.company.login');
     }
 
-    public function companyLogin(Request $request)
+    public function companyLogin(LoginCompanyRequest $request)
     {
-        $this->validate([$request, [
-            'email' => 'required|email',
-            'password' => 'required|min:6'
-        ]]);
 
         if (Auth::guard('companies')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
             return redirect()->intended('/dashboard');
