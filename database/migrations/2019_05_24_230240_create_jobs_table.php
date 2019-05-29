@@ -18,6 +18,8 @@ class CreateJobsTable extends Migration
             $table->string('title');
             $table->text('summary', 300)->nullable();
             $table->text('context')->nullable();
+            $table->boolean('is_open')->default(false);
+            $table->boolean('is_featured')->default(false);
             $table->uuid('company_id')->index();
             $table->string('image')->nullable();
             $table->dateTime('due_date');
