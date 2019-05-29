@@ -5,18 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ isset($url) ? ucwords($url) : "" }} {{ __('Register') }}</div>
+                <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                 @isset($url)
-                    <form method="POST" action="{{ route('register/$url') }}">
-                @else
-                    <form method="POST" action="{{ route('register') }}">
-                 @endisset
+                    <form method="POST" action="{{ route('companies.register') }}">
                     @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Company Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -43,7 +39,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone number') }}</label>
 
                             <div class="col-md-6">
@@ -55,15 +51,15 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group row">
-                            <label for="photo" class="col-md-4 col-form-label text-md-right">{{ __('Profile photo') }}</label>
+                            <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Company logo') }}</label>
 
                             <div class="col-md-6">
-                                <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror" name="photo">
+                                <input id="logo" type="file" class="form-control @error('logo') is-invalid @enderror" name="logo">
 
-                                @error('photo')
+                                @error('logo')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

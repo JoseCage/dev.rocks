@@ -21,7 +21,7 @@ Auth::routes(['verify' => true]);
 Route::get('/login/companies', 'Auth\LoginController@showCompanyLoginForm');
 Route::post('login/companies', 'Auth\LoginController@loginCompany')->name('companies.login');
 Route::get('/register/companies', 'Auth\RegisterController@showCompanyRegistrationForm');
-Route::post('register/companies', 'Auth\RegisterController@registerCompany')->name('companies.register');
+Route::post('register/companies', 'Auth\RegisterController@createCompany')->name('companies.register');
 //});
 // Candidate routes
 Route::group(['prefix' => 'me'], function($dashboard){
@@ -44,8 +44,8 @@ Route::group(['prefix' => 'me'], function($dashboard){
     // $auth->get('password/reset/{token}', 'ForgotPasswordController@showResetForm')->name('companies.password.reset');
 });*/
 // Companies routes
-Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:company', 'namespace' => 'Company'], function ($admin) {
-    $admin->get('/', 'AdminController@home')->name('companies.admin');
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:companies', 'namespace' => 'Company'], function ($admin) {
+    $admin->get('/', 'DashboardController@home')->name('companies.admin');
     $admin->group(['prefix' => 'jobs'], function($job){
         $job->get('/', 'JobController@index')->name('companies.jobs');
         $job->post('/', 'JobController@addJob')->name('companies.jobs.add');

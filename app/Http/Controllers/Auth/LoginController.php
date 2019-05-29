@@ -2,6 +2,8 @@
 
 namespace DevRocks\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+
 use DevRocks\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -40,7 +42,7 @@ class LoginController extends Controller
 
     public function showCompanyLoginForm()
     {
-        return view('auth.login', compact('url', 'companies'));
+        return view('auth.company.login');
     }
 
     public function companyLogin(Request $request)

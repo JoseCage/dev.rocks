@@ -50,4 +50,17 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+    protected function unauthenticated($request, AuthenticationException $exeption)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        if ($request->is('dashboard') || $request->is('dashboard/*')) {
+            return redirect()->guest('/login/companies');
+        }
+
+        return redirect()->guest(route('login'));
+    }
 }

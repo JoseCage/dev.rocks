@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use DevRocks\Traits\UuidTrait as Uuids;
 
-class Company extends Authenticable
+class Company extends Authenticatable
 {
     use Uuids, Notifiable;
 

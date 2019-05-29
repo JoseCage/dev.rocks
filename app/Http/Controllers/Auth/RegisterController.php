@@ -2,13 +2,15 @@
 
 namespace DevRocks\Http\Controllers\Auth;
 
-use DevRocks\Models\User;
 use DevRocks\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
+use DevRocks\Models\User;
 
 class RegisterController extends Controller
 {
@@ -30,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/me';
 
     /**
      * Create a new controller instance.
@@ -92,7 +94,7 @@ class RegisterController extends Controller
 
     public function showCompanyRegistrationForm()
     {
-        return view('auth.register', compact('url', 'companies'));
+        return view('auth.company.register');
     }
 
     public function createCompany(Request $request)
@@ -103,6 +105,7 @@ class RegisterController extends Controller
         $company = Company::create([
             'name' => $request['name'],
             'email' => $request['email'],
+            'logo' => $request['logo'],
             'password' => Hash::make($request['password']),
         ]);
 

@@ -1,9 +1,9 @@
 {
-    "name": "laravel/laravel",
+    "name": "linkasoftwares/devrocks",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Job board for developers and geeks.",
     "keywords": [
-        "framework",
+        "jobboard",
         "laravel"
     ],
     "license": "MIT",
