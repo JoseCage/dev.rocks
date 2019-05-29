@@ -18,13 +18,13 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('phone', 15)->unique();
-            $table->string('logo');
-            $table->string('facebook_handle')->nullable();
+            $table->string('phone', 15)->unique()->nullable();
+            $table->string('logo')->nullable();
+            $table->string('facebook_page')->nullable();
             $table->string('website')->nullable();
             $table->string('twitter_handle')->nullable();
-            $table->string('github_handle')->nullable();
-            $table->string('slug');
+            $table->string('github_profile')->nullable();
+            $table->string('slug')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

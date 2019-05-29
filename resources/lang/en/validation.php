@@ -116,6 +116,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'pwned' => 'The password yo are trying to use isn\'t safe and has been leaked before. Please use a strong one!.',
 
     /*
     |--------------------------------------------------------------------------

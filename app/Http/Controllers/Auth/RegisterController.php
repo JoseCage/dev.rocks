@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 use DevRocks\Models\User;
+use DevRocks\Http\Requests\CreateCompanyRequest;
+use DevRocks\Models\Company;
 
 class RegisterController extends Controller
 {
@@ -58,7 +60,7 @@ class RegisterController extends Controller
             'phone' => ['required', 'string', 'min:9', 'max:15'],
             //'photo' => ['required', 'string', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'pwned'],
         ]);
     }
 
@@ -97,10 +99,18 @@ class RegisterController extends Controller
         return view('auth.company.register');
     }
 
-    public function createCompany(Request $request)
+    public function createCompany(CreateCompanyRequest $request)
     {
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
 
+        $fileName = 'null';
+        if (input::file('logo')) {
+            $destinationPath = public_path('logos');
+            $extension = Input::file('logo')->getClientOriginalExtension();
+            $fileName =  'logo_' . uniqid().'.'.$extension;
+
+            Input::file('logo')->move($destinationPath, $fileName);
+        }
 
         $company = Company::create([
             'name' => $request['name'],

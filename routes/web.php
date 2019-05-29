@@ -19,7 +19,7 @@ Route::get('/', function () {
 //Route::group(['prefix' => 'users'], function(){
 Auth::routes(['verify' => true]);
 Route::get('/login/companies', 'Auth\LoginController@showCompanyLoginForm');
-Route::post('login/companies', 'Auth\LoginController@loginCompany')->name('companies.login');
+Route::post('login/companies', 'Auth\LoginController@companyLogin')->name('companies.login');
 Route::get('/register/companies', 'Auth\RegisterController@showCompanyRegistrationForm');
 Route::post('register/companies', 'Auth\RegisterController@createCompany')->name('companies.register');
 //});
