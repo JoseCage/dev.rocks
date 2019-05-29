@@ -21,6 +21,7 @@ class CreateJobsTable extends Migration
             $table->string('location')->nullable();
             $table->boolean('is_open')->default(false);
             $table->boolean('is_featured')->default(false);
+            $table->uuid('job_type')->index();
             $table->uuid('company_id')->index();
             $table->string('image')->nullable();
             $table->dateTime('due_date');
@@ -29,7 +30,8 @@ class CreateJobsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('job_type')->references('id')->on('job_types');
+            $table->foreign('company_id')->references('id')->on('companies');
         });
     }
 

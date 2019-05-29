@@ -280,7 +280,7 @@
           </div>
         </div>
 				<div class="row">
-					<?php foreach ($openJobs as $job): ?>
+					@foreach ($openJobs as $job)
             <div class="col-md-12 ftco-animate">
 
               <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
@@ -294,7 +294,7 @@
                   </div>
                   <div class="job-post-item-body d-block d-md-flex">
                     <div class="mr-3"><span class="icon-layers"></span> <a href="/companies/{{ $job->company->slug }}">{{ $job->company->name }} </a></div>
-                    <div><span class="icon-my_location"></span> <span>{{-- $job->location --}} Western City, UK</span></div>
+                    <div><span class="icon-my_location"></span> <span>{{ $job->location }} Western City, UK</span></div>
                   </div>
                 </div>
 
@@ -306,7 +306,7 @@
                 </div>
               </div>
             </div><!-- end -->
-          <?php endforeach; ?>
+            @endforeach
 
           <!--div class="col-md-12 ftco-animate">
 						<div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
@@ -535,13 +535,14 @@
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
+                <li><span>{{ $openJobs->links() }}</span></li>
+                <!-- <li><a href="#">&lt;</a></li>
+                <li class="active"><span>{{ $openJobs->links() }}</span></li>
+                <li><a href="#"></a></li>
                 <li><a href="#">3</a></li>
                 <li><a href="#">4</a></li>
                 <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
+                <li><a href="#">&gt;</a></li> -->
               </ul>
             </div>
           </div>

@@ -4,6 +4,7 @@
 
 use DevRocks\Models\Job;
 use DevRocks\Models\Company;
+use DevRocks\Models\JobType;
 
 use Faker\Generator as Faker;
 
@@ -15,8 +16,12 @@ $factory->define(Job::class, function (Faker $faker) {
       'title' => $title,
       'summary' => $faker->text(150),
       'context' => $faker->text(200),
+      'location' => $faker->city,
       'is_open' => true,
       'is_featured' => false,
+      'job_type' => function(){
+          return factory(JobType::class)->create()->id;
+      },
       'company_id' => function(){
           return factory(Company::class)->create()->id;
       },
