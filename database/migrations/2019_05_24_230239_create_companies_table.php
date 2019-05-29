@@ -15,7 +15,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 15)->unique()->nullable();
@@ -24,7 +24,7 @@ class CreateCompaniesTable extends Migration
             $table->string('website')->nullable();
             $table->string('twitter_handle')->nullable();
             $table->string('github_profile')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('slug')->nullable()->unique();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

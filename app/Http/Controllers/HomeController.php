@@ -4,6 +4,8 @@ namespace DevRocks\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DevRocks\Models\Job;
+
 class HomeController extends Controller
 {
     /**
@@ -13,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('landingpage');
     }
 
     /**
@@ -24,5 +26,13 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function landingpage()
+    {
+      $countOpenJobs = Job::where('is_open', true)->count();
+      $openJobs = Job::where('is_open', true)->orderBy('created_at', 'desc')->paginate(6);
+
+      return view('landingpage', compact('countOpenJobs', 'openJobs'));
     }
 }

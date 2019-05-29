@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@landingpage')->name('landingpage');
+
+Route::get('/demo', function(){
+    return view('layouts.portal');
 });
 
 // Candidate auth

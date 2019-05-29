@@ -4,6 +4,8 @@ namespace DevRocks\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\Facades\URL;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+      if(\App::environment('production')) {
+        Url::forceScheme('https');
+      }
     }
 }
