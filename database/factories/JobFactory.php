@@ -13,8 +13,8 @@ $factory->define(Job::class, function (Faker $faker) {
 
     return [
       'title' => $title,
-      'summary' => $faker->paragraphs,
-      'context' => $faker->paragraphs,
+      'summary' => $faker->text(150),
+      'context' => $faker->text(200),
       'is_open' => true,
       'is_featured' => false,
       'company_id' => function(){

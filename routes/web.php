@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('landingpage');
+Route::get('/', 'HomeController@landingpage')->name('landingpage');
 
 Route::get('/demo', function(){
     return view('layouts.portal');

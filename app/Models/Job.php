@@ -23,7 +23,7 @@ class Job extends Model
     * @var array
     */
    protected $fillable = [
-       'id', 'title', 'summary', 'context', 'is_open', 'is_featured',
+       'id', 'title', 'summary', 'context', 'location', 'is_open', 'is_featured',
        'company_id', 'image', 'due_date', 'url', 'slug'
    ];
 
@@ -50,6 +50,6 @@ class Job extends Model
    */
    public function company()
    {
-       return $this->belongsTo(User::class, 'company_id');
+       return $this->belongsTo(Company::class, 'company_id');
    }
 }
